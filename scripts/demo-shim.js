@@ -94,6 +94,8 @@
   // "are you sure?" step just proceeds.
   window.confirm = () => true;
 
+  window.PBC.demo = true;
+
   window.PBC.resetDemo = function () {
     try {
       localStorage.removeItem(KEY);

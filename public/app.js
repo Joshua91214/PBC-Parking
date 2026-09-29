@@ -168,8 +168,32 @@
 
   // ---------- routing ----------
 
+  function routeFromHash(hash) {
+    return (String(hash).replace(/^#\/?/, '') || 'home').split('/')[0];
+  }
+
   function onRoute() {
-    route = (location.hash.replace(/^#\/?/, '') || 'home').split('/')[0];
+    showRoute(routeFromHash(location.hash));
+  }
+
+  // Screens switch in-page. The hash is kept in sync where the page owns its
+  // URL; the demo runs inside embedded viewers that treat a hash change (or a
+  // followed link) as leaving the page, so it only switches in memory.
+  function go(next) {
+    const demo = window.PBC && window.PBC.demo;
+    if (!demo && routeFromHash(location.hash) !== next) {
+      try {
+        location.hash = '#/' + next;
+        return; // hashchange -> onRoute
+      } catch (e) {
+        /* fall through to in-memory routing */
+      }
+    }
+    showRoute(next);
+  }
+
+  function showRoute(next) {
+    route = next;
     document.querySelectorAll('.tabs a').forEach((a) => {
       a.classList.toggle('active', a.dataset.tab === route);
     });
@@ -899,6 +923,13 @@
   };
 
   document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href^="#"]');
+    if (link) {
+      e.preventDefault();
+      go(routeFromHash(link.getAttribute('href')));
+      window.scrollTo(0, 0);
+      return;
+    }
     const el = e.target.closest('[data-act]');
     if (!el || !el.dataset.act) {
       if (e.target === $sheet) closeSheet();
@@ -940,7 +971,9 @@
     render();
   });
 
-  window.addEventListener('hashchange', onRoute);
+  window.addEventListener('hashchange', () => {
+    if (!(window.PBC && window.PBC.demo)) onRoute();
+  });
   onRoute();
   connect();
 })();
