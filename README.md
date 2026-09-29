@@ -46,6 +46,13 @@ so two people can never hand out the same spot.
   in forward (easier), and small and medium cars to back in (quicker exit
   after service).
 
+## Trying it without a server
+
+`npm run demo` builds `dist/demo.html`, a single file with the whole app
+inside it. Open it in any browser to click through every screen. In demo
+mode everything stays on that one device, so it's for practice and training,
+not for running a real Sunday.
+
 ## Setting up your lot
 
 Open **Setup**:
@@ -95,7 +102,9 @@ On a phone, use **Add to Home Screen** to open the app like a native app.
 server.js          HTTP server, JSON API, live updates (Server-Sent Events)
 lib/core.js        Spot assignment + map geometry (shared with the browser)
 lib/store.js       Session actions: new car, parked, reassign, cancel…
+lib/routes.js      JSON API routes (shared by the server and the demo)
 lib/defaultLot.js  Sample lot used until you save your own
 public/            The web app (Entrance, Usher, Map, Setup screens)
+scripts/           Builds the single-file demo
 test/              node:test suites
 ```
