@@ -436,7 +436,7 @@
       const fs = Math.min(s.w, s.h) * 0.42;
       return `
         <g class="spot ${cls}${big}${hl}${edit}" data-act="${o.onSpot || ''}" data-spot="${s.id}" data-row="${s.rowId}" data-num="${s.number}">
-          <rect x="${s.x + 0.05}" y="${s.y + 0.05}" width="${s.w - 0.1}" height="${s.h - 0.1}" rx="0.12"/>
+          ${spotShape(s)}
           <text x="${s.x + s.w / 2}" y="${s.y + s.h / 2 + fs * 0.35}" font-size="${fs}" text-anchor="middle">${esc(label)}</text>
         </g>`;
     }).join('');
@@ -450,6 +450,27 @@
           ${rowLabels}${rects}${marks}
         </svg>
       </div>`;
+  }
+
+  // Straight spots are rectangles; diagonal ones are parallelograms leaning
+  // along the row, so the map looks like the painted lines.
+  function spotShape(s) {
+    if (!s.angled) {
+      return `<rect x="${s.x + 0.05}" y="${s.y + 0.05}" width="${s.w - 0.1}" height="${s.h - 0.1}" rx="0.12"/>`;
+    }
+    const lean = (s.angled === 'right' ? 1 : -1) * 0.45;
+    const g = 0.06;
+    let pts;
+    if (s.w <= s.h) {
+      // Horizontal row: spot is 1 wide, 2 deep; shift the top edge sideways.
+      const x0 = s.x + g, x1 = s.x + s.w - g, y0 = s.y + g, y1 = s.y + s.h - g;
+      pts = [[x0 + lean, y0], [x1 + lean, y0], [x1 - lean, y1], [x0 - lean, y1]];
+    } else {
+      // Vertical row: spot is 2 wide, 1 deep; shift the left edge up/down.
+      const x0 = s.x + g, x1 = s.x + s.w - g, y0 = s.y + g, y1 = s.y + s.h - g;
+      pts = [[x0, y0 + lean], [x1, y0 - lean], [x1, y1 - lean], [x0, y1 + lean]];
+    }
+    return `<polygon points="${pts.map((p) => p.join(',')).join(' ')}"/>`;
   }
 
   function mapView() {
@@ -600,7 +621,8 @@
           <label>Fill order<input type="number" data-num="1" data-bind="${p}fillOrder" value="${r.fillOrder}"></label>
           <label>Fill from${sel(p + 'fillFrom', r.fillFrom || 'start', [['start', 'Spot 1 first'], ['end', 'Last spot first']])}</label>
           <label>Fits up to${sel(p + 'maxSize', r.maxSize || 'large', SIZE_OPTS)}</label>
-          <label>Parking${sel(p + 'park', r.park || 'auto', PARK_OPTS)}</label>
+          <label>Spot angle${sel(p + 'angled', r.angled || '', [['', 'Straight'], ['left', 'Diagonal, leaning left'], ['right', 'Diagonal, leaning right']])}</label>
+          <label>Parking${r.angled ? '<select disabled><option>Pull in forward (diagonal)</option></select>' : sel(p + 'park', r.park || 'auto', PARK_OPTS)}</label>
         </div>
         <button class="btn mini danger" data-act="row-del" data-i="${i}">Delete row ${esc(r.label)}</button>
       </div>`;

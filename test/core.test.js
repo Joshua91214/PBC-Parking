@@ -101,6 +101,15 @@ test('park direction: row setting wins, auto depends on size', () => {
   assert.equal(core.parkDirection({ park: 'reverse' }, 'van').dir, 'reverse');
 });
 
+test('diagonal spots are always pull-in forward', () => {
+  const lot = oneRowLot(3, { angled: 'left', park: 'reverse' });
+  const spot = core.expandLot(lot).byId.A1;
+  assert.equal(spot.angled, 'left');
+  assert.equal(core.parkDirection(spot, 'small').dir, 'front');
+  assert.deepEqual(core.validateLot(lot), []);
+  assert.match(core.validateLot(oneRowLot(3, { angled: 'up' })).join(' '), /angle/);
+});
+
 test('usher instruction depends on where the usher stands', () => {
   const lot = oneRowLot(2);
   lot.rows.push({ id: 'r2', label: 'B', zone: 'z2', x: 0, y: 5, count: 2, fillOrder: 2 });

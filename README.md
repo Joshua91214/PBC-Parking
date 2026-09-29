@@ -38,7 +38,10 @@ so two people can never hand out the same spot.
 - **Vans** go only to spots marked as van-size. Small cars stay out of those
   spots while regular ones are open.
 - **Reserved** spots (e.g. accessible parking) are never auto-assigned.
-- **Front vs. back in**: each row, or single spot, can be set to *Pull in
+- **Diagonal spots**: set a row's *Spot angle* to diagonal (leaning left or
+  right) and the map draws it slanted. Diagonal spots are always *pull in
+  forward*, since backing in would mean reversing against the angle.
+- **Front vs. back in** (straight spots): each row, or single spot, can be set to *Pull in
   forward*, *Back in*, or *Auto*. Auto tells large vehicles and vans to pull
   in forward (easier), and small and medium cars to back in (quicker exit
   after service).

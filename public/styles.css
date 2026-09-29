@@ -184,17 +184,17 @@ textarea { font-family: ui-monospace, monospace; font-size: 0.8rem; }
 .map-wrap { width: 100%; overflow-x: auto; }
 .map { width: 100%; min-width: 320px; height: auto; max-height: 70vh; display: block; }
 .map-wrap.compact .map { max-height: 34vh; margin: 8px 0; }
-.spot rect { fill: var(--free); stroke: #9aa7b5; stroke-width: 0.04; }
+.spot rect, .spot polygon { fill: var(--free); stroke: #9aa7b5; stroke-width: 0.04; }
 .spot text { fill: #334; font-weight: 700; pointer-events: none; }
-.spot.van rect { stroke: var(--van); stroke-width: 0.08; }
-.spot.compact rect { stroke-dasharray: 0.12 0.08; }
-.spot.assigned rect { fill: var(--assigned); }
-.spot.parked rect { fill: var(--parked); }
+.spot.van rect, .spot.van polygon { stroke: var(--van); stroke-width: 0.08; }
+.spot.compact rect, .spot.compact polygon { stroke-dasharray: 0.12 0.08; }
+.spot.assigned rect, .spot.assigned polygon { fill: var(--assigned); }
+.spot.parked rect, .spot.parked polygon { fill: var(--parked); }
 .spot.parked text { fill: #fff; }
-.spot.blocked rect { fill: #f3c7c2; stroke: var(--danger); }
+.spot.blocked rect, .spot.blocked polygon { fill: #f3c7c2; stroke: var(--danger); }
 .spot.blocked text { fill: var(--danger); }
-.spot.reserved rect { fill: var(--reserved); }
-.spot.hl rect { stroke: #e3262d; stroke-width: 0.16; animation: pulse 1s infinite; }
+.spot.reserved rect, .spot.reserved polygon { fill: var(--reserved); }
+.spot.hl rect, .spot.hl polygon { stroke: #e3262d; stroke-width: 0.16; animation: pulse 1s infinite; }
 .spot[data-act="map-spot"], .spot[data-act="edit-spot"] { cursor: pointer; }
 @keyframes pulse { 50% { stroke-opacity: 0.25; } }
 .row-label { font-size: 0.8px; font-weight: 800; fill: var(--brand); }
