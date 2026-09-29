@@ -50,7 +50,9 @@
 
   const realFetch = window.fetch;
   window.fetch = async function (url, opts) {
-    const u = new URL(url, location.href);
+    // Resolve against a fixed base: embedded viewers can give the page an
+    // opaque address (about:srcdoc, blob:) that URL() cannot resolve against.
+    const u = new URL(String(url), 'http://demo.invalid');
     if (!u.pathname.startsWith('/api/')) return realFetch.apply(this, arguments);
     const method = ((opts && opts.method) || 'GET').toUpperCase();
     const body = opts && opts.body ? JSON.parse(opts.body) : {};

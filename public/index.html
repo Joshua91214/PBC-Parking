@@ -13,15 +13,15 @@
 <body>
   <div class="chrome">
   <header class="topbar">
-    <a href="#/" class="brand">🅿️ PBC Parking</a>
+    <button type="button" class="brand" data-nav="home">🅿️ PBC Parking</button>
     <span id="session-name" class="session-name"></span>
     <span id="live" class="live" title="Connection status">●</span>
   </header>
   <nav class="tabs">
-    <a href="#/entrance" data-tab="entrance">Entrance</a>
-    <a href="#/usher" data-tab="usher">Usher</a>
-    <a href="#/map" data-tab="map">Map</a>
-    <a href="#/setup" data-tab="setup">Setup</a>
+    <button type="button" data-nav="entrance" data-tab="entrance">Entrance</button>
+    <button type="button" data-nav="usher" data-tab="usher">Usher</button>
+    <button type="button" data-nav="map" data-tab="map">Map</button>
+    <button type="button" data-nav="setup" data-tab="setup">Setup</button>
   </nav>
   </div>
   <main id="app"></main>

@@ -44,7 +44,7 @@ h3 small, h2 small { font-weight: 400; font-size: 0.8em; }
   padding: 10px 16px; padding-top: max(10px, env(safe-area-inset-top));
   background: var(--brand); color: #fff;
 }
-.brand { color: #fff; text-decoration: none; font-weight: 700; font-size: 1.1rem; }
+.brand { color: #fff; background: none; border: 0; padding: 0; font: inherit; font-weight: 700; font-size: 1.1rem; cursor: pointer; }
 .session-name { flex: 1; text-align: right; opacity: 0.85; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .live { font-size: 1.1rem; color: #999; }
 .live.on { color: #4ade80; }
@@ -54,12 +54,13 @@ h3 small, h2 small { font-weight: 400; font-size: 0.8em; }
 .tabs {
   display: flex; background: #fff; border-bottom: 1px solid var(--line);
 }
-.tabs a {
+.tabs button {
+  background: none; border: 0; border-bottom: 3px solid transparent; font: inherit; cursor: pointer;
   flex: 1; text-align: center; padding: 12px 4px;
   color: var(--muted); text-decoration: none; font-weight: 600;
   border-bottom: 3px solid transparent;
 }
-.tabs a.active { color: var(--brand); border-bottom-color: var(--brand); }
+.tabs button.active { color: var(--brand); border-bottom-color: var(--brand); }
 
 main { max-width: 760px; margin: 0 auto; padding: 12px 16px 80px; }
 
@@ -99,6 +100,7 @@ textarea { font-family: ui-monospace, monospace; font-size: 0.8rem; }
 /* home */
 .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .role {
+  background: #fff; font: inherit; text-align: left; cursor: pointer;
   display: flex; flex-direction: column; gap: 4px; padding: 16px;
   border: 1px solid var(--line); border-radius: 12px;
   text-decoration: none; color: var(--ink);

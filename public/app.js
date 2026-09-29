@@ -194,7 +194,7 @@
 
   function showRoute(next) {
     route = next;
-    document.querySelectorAll('.tabs a').forEach((a) => {
+    document.querySelectorAll('.tabs [data-tab]').forEach((a) => {
       a.classList.toggle('active', a.dataset.tab === route);
     });
     closeSheet();
@@ -218,10 +218,10 @@
       <section class="card">
         <h2>Who are you today?</h2>
         <div class="role-grid">
-          <a class="role" href="#/entrance"><b>🚗 Entrance</b><span>Size up each car, hand out a number</span></a>
-          <a class="role" href="#/usher"><b>🦺 Usher</b><span>Enter a number, point the driver to the spot</span></a>
-          <a class="role" href="#/map"><b>🗺️ Lot Map</b><span>Live view of every spot</span></a>
-          <a class="role" href="#/setup"><b>⚙️ Setup</b><span>Lot layout &amp; new session</span></a>
+          <button type="button" class="role" data-nav="entrance"><b>🚗 Entrance</b><span>Size up each car, hand out a number</span></button>
+          <button type="button" class="role" data-nav="usher"><b>🦺 Usher</b><span>Enter a number, point the driver to the spot</span></button>
+          <button type="button" class="role" data-nav="map"><b>🗺️ Lot Map</b><span>Live view of every spot</span></button>
+          <button type="button" class="role" data-nav="setup"><b>⚙️ Setup</b><span>Lot layout &amp; new session</span></button>
         </div>
       </section>
       ${capacityCard(cap)}`;
@@ -923,10 +923,12 @@
   };
 
   document.addEventListener('click', (e) => {
-    const link = e.target.closest('a[href^="#"]');
-    if (link) {
+    // Navigation uses buttons, not links: some embedded viewers intercept
+    // every link click (even #hash links) as leaving the page.
+    const nav = e.target.closest('[data-nav]');
+    if (nav) {
       e.preventDefault();
-      go(routeFromHash(link.getAttribute('href')));
+      go(nav.dataset.nav);
       window.scrollTo(0, 0);
       return;
     }
